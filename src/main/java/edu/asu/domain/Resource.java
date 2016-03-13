@@ -35,4 +35,9 @@ public class Resource {
         lockQue.add(lock);
         return lock;
     }
+
+    public synchronized Lock releaseLock(LockType lockType) {
+        this.notifyAll();
+        return lockQue.remove();
+    }
 }

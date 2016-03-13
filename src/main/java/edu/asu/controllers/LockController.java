@@ -57,6 +57,18 @@ public class LockController {
         return LockFactory.acquireLock(userId, resourcePath, lockType);
     }
 
+    @RequestMapping("/unlock")
+    @ResponseBody
+    String unlock(
+            @RequestParam("userId") String userId,
+            @RequestParam("resourcePath") String resourcePath,
+            @RequestParam("lockType") String lockType
+    ) {
+        return LockFactory.releaseLock(userId, resourcePath, lockType);
+    }
+
+
+
     public static void main(String[] args) throws Exception {
         SpringApplication.run(LockController.class, args);
     }
