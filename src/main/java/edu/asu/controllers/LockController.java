@@ -1,10 +1,11 @@
 package edu.asu.controllers;
 
 import edu.asu.services.LockFactory;
-import org.springframework.boot.*;
-import org.springframework.boot.autoconfigure.*;
-import org.springframework.stereotype.*;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @EnableAutoConfiguration
@@ -65,11 +66,5 @@ public class LockController {
             @RequestParam("lockType") String lockType
     ) {
         return LockFactory.releaseLock(userId, resourcePath, lockType);
-    }
-
-
-
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(LockController.class, args);
     }
 }
