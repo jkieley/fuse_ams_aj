@@ -33,16 +33,17 @@ public class LockFactory {
         output+="\"userId\": \""+user.getUserId()+"\",";
         output+="\"resourcePath\": \""+resource.getResourcePath()+"\",";
         output+="\"lockType\": \""+lock.getType().toString()+"\",";
+        output+="\"md5\": \""+resource.getMd5FromLastUpdate()+"\",";
         output+="\"issueTime\": \""+lock.getLockTime().toString()+"\"";
         output+="}";
         return output;
     }
 
-    public static String releaseLock(String userId, String resourcePath, String lockTypeString) {
+    public static String releaseLock(String userId, String resourcePath, String lockTypeString, String md5FromLastUpdate) {
         LockType lockType = LockType.get(lockTypeString);
         User user = UserFactory.getUser(userId);
         Resource resource = user.getResource(resourcePath);
-        resource.releaseLock(lockType);
+        resource.releaseLock(lockType, md5FromLastUpdate);
         return "{releaseLock: \"success\"}";
     }
 }

@@ -63,8 +63,10 @@ public class LockController {
     String unlock(
             @RequestParam("userId") String userId,
             @RequestParam("resourcePath") String resourcePath,
+            @RequestParam("md5") String md5FromLastUpdate,
             @RequestParam("lockType") String lockType
+
     ) {
-        return LockFactory.releaseLock(userId, resourcePath, lockType);
+        return LockFactory.releaseLock(userId, resourcePath, lockType, md5FromLastUpdate);
     }
 }

@@ -11,6 +11,8 @@ public class Resource {
     }
 
     private String resourcePath;
+    private String md5FromLastUpdate ="N/A";
+
     private ConcurrentLinkedQueue<Lock> lockQue = new ConcurrentLinkedQueue<>();
 
     public Resource(String resourcePath) {
@@ -36,8 +38,18 @@ public class Resource {
         return lock;
     }
 
-    public synchronized Lock releaseLock(LockType lockType) {
+    public synchronized Lock releaseLock(LockType lockType, String md5FromLastUpdate) {
+        this.setMd5FromLastUpdate(md5FromLastUpdate);
+        Lock lock = lockQue.remove();
         this.notifyAll();
-        return lockQue.remove();
+        return lock;
+    }
+
+    public String getMd5FromLastUpdate() {
+        return md5FromLastUpdate;
+    }
+
+    public void setMd5FromLastUpdate(String md5FromLastUpdate) {
+        this.md5FromLastUpdate = md5FromLastUpdate;
     }
 }
