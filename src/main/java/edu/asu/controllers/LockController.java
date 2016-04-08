@@ -55,6 +55,7 @@ public class LockController {
             @RequestParam("resourcePath") String resourcePath,
             @RequestParam("lockType") String lockType
     ) {
+        System.out.println(String.format("lock: userId: %s, resourcePath: %s, lockType: %s", userId, resourcePath, lockType));
         return LockFactory.acquireLock(userId, resourcePath, lockType);
     }
 
@@ -67,6 +68,7 @@ public class LockController {
             @RequestParam("lockType") String lockType
 
     ) {
+        System.out.println(String.format("unlock: userId: %s, resourcePath: %s,md5: %s, lockType: %s", userId, resourcePath, md5FromLastUpdate, lockType));
         return LockFactory.releaseLock(userId, resourcePath, lockType, md5FromLastUpdate);
     }
 }
