@@ -1,5 +1,6 @@
 package edu.asu.domain;
 
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -12,7 +13,9 @@ public class Resource {
 
     private String resourcePath;
     private String md5FromLastUpdate ="N/A";
+    private int maxLease = 0;
 
+    private ConcurrentHashMap<Integer,Lease> leaseMap = new ConcurrentHashMap<>();
     private ConcurrentLinkedQueue<Lock> lockQue = new ConcurrentLinkedQueue<>();
 
     public Resource(String resourcePath) {
@@ -51,5 +54,27 @@ public class Resource {
 
     public void setMd5FromLastUpdate(String md5FromLastUpdate) {
         this.md5FromLastUpdate = md5FromLastUpdate;
+    }
+
+    public synchronized LeaseResult acquireLease() {
+        Lease lease = createLease();
+
+        LeaseResult leaseResult = new LeaseResult();
+        leaseResult.setHasOthers(leaseMap.size() > 0);
+        leaseResult.setLease(lease);
+
+        leaseMap.put(lease.getNum(),lease);
+
+        return leaseResult;
+    }
+
+    public synchronized void releaseLease(Integer leaseKey) {
+        leaseMap.remove(leaseKey);
+    }
+
+    private Lease createLease() {
+        maxLease++;
+        Lease lease = new Lease(maxLease);
+        return lease;
     }
 }

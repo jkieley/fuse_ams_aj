@@ -71,4 +71,25 @@ public class LockController {
         System.out.println(String.format("unlock: userId: %s, resourcePath: %s,md5: %s, lockType: %s", userId, resourcePath, md5FromLastUpdate, lockType));
         return LockFactory.releaseLock(userId, resourcePath, lockType, md5FromLastUpdate);
     }
+
+    @RequestMapping("/lease")
+    @ResponseBody
+    String lease(
+            @RequestParam("userId") String userId,
+            @RequestParam("resourcePath") String resourcePath
+    ) {
+        System.out.println(String.format("lease: userId: %s, resourcePath: %s", userId, resourcePath));
+        return LockFactory.acquireLease(userId, resourcePath);
+    }
+
+    @RequestMapping("/unlease")
+    @ResponseBody
+    String unlease(
+            @RequestParam("userId") String userId,
+            @RequestParam("resourcePath") String resourcePath,
+            @RequestParam("leaseKey") String leaseKey
+    ) {
+        System.out.println(String.format("unlease: userId: %s, resourcePath: %s", userId, resourcePath));
+        return LockFactory.releaseLease(userId, resourcePath, leaseKey);
+    }
 }

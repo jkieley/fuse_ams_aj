@@ -1,5 +1,6 @@
 package edu.asu.services;
 
+import edu.asu.domain.LeaseResult;
 import edu.asu.domain.Lock;
 import edu.asu.domain.LockType;
 import edu.asu.domain.Resource;
@@ -9,6 +10,9 @@ import edu.asu.domain.User;
  * Created by james.kieley on 3/13/16.
  */
 public class LockFactory {
+
+    private static final String successJsonString = "{releaseLock: \"success\"}";
+
     public static String acquireLock(String userId, String resourcePath, String lockTypeString) {
         LockType lockType = LockType.get(lockTypeString);
         User user = UserFactory.getUser(userId);
@@ -44,6 +48,21 @@ public class LockFactory {
         User user = UserFactory.getUser(userId);
         Resource resource = user.getResource(resourcePath);
         resource.releaseLock(lockType, md5FromLastUpdate);
-        return "{releaseLock: \"success\"}";
+        return successJsonString;
+    }
+
+    public static String acquireLease(String userId, String resourcePath) {
+        User user = UserFactory.getUser(userId);
+        Resource resource = user.getResource(resourcePath);
+        LeaseResult leaseResult = resource.acquireLease();
+        return "{leaseKey: \""+leaseResult.getLease().getNum()+"\", hasLease: \""+leaseResult.isHasOthers()+"\"}";
+    }
+
+    public static String releaseLease(String userId, String resourcePath, String leaseKeyString) {
+        Integer leaseKey = Integer.parseInt(leaseKeyString);
+        User user = UserFactory.getUser(userId);
+        Resource resource = user.getResource(resourcePath);
+        resource.releaseLease(leaseKey);
+        return successJsonString;
     }
 }
