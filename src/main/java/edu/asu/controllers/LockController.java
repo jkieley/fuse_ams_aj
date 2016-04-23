@@ -87,9 +87,10 @@ public class LockController {
     String unlease(
             @RequestParam("userId") String userId,
             @RequestParam("resourcePath") String resourcePath,
-            @RequestParam("leaseKey") String leaseKey
+            @RequestParam("leaseKey") String leaseKey,
+            @RequestParam("md5") String md5FromLastUpdate
     ) {
         System.out.println(String.format("unlease: userId: %s, resourcePath: %s", userId, resourcePath));
-        return LockFactory.releaseLease(userId, resourcePath, leaseKey);
+        return LockFactory.releaseLease(userId, resourcePath, leaseKey, md5FromLastUpdate);
     }
 }

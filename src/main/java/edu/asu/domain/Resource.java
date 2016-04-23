@@ -68,7 +68,8 @@ public class Resource {
         return leaseResult;
     }
 
-    public synchronized void releaseLease(Integer leaseKey) {
+    public synchronized void releaseLease(Integer leaseKey, String md5FromLastUpdate) {
+        this.setMd5FromLastUpdate(md5FromLastUpdate);
         leaseMap.remove(leaseKey);
     }
 

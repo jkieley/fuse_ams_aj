@@ -58,11 +58,11 @@ public class LockFactory {
         return "{leaseKey: \""+leaseResult.getLease().getNum()+"\", hasLease: \""+leaseResult.isHasOthers()+"\"}";
     }
 
-    public static String releaseLease(String userId, String resourcePath, String leaseKeyString) {
+    public static String releaseLease(String userId, String resourcePath, String leaseKeyString, String md5FromLastUpdate) {
         Integer leaseKey = Integer.parseInt(leaseKeyString);
         User user = UserFactory.getUser(userId);
         Resource resource = user.getResource(resourcePath);
-        resource.releaseLease(leaseKey);
+        resource.releaseLease(leaseKey, md5FromLastUpdate);
         return successJsonString;
     }
 }
