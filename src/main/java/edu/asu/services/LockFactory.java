@@ -55,7 +55,7 @@ public class LockFactory {
         User user = UserFactory.getUser(userId);
         Resource resource = user.getResource(resourcePath);
         LeaseResult leaseResult = resource.acquireLease();
-        return "{leaseKey: \""+leaseResult.getLease().getNum()+"\", hasLease: \""+leaseResult.isHasOthers()+"\"}";
+        return "{\"leaseKey\": \""+leaseResult.getLease().getNum()+"\", \"hasLease\": "+leaseResult.isHasOthers()+", \"md5\": \""+resource.getMd5FromLastUpdate()+"\"}";
     }
 
     public static String releaseLease(String userId, String resourcePath, String leaseKeyString, String md5FromLastUpdate) {
