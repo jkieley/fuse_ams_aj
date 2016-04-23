@@ -11,7 +11,7 @@ import edu.asu.domain.User;
  */
 public class LockFactory {
 
-    private static final String successJsonString = "{releaseLock: \"success\"}";
+    private static final String successJsonString = "{\"releaseLock\": \"success\"}";
 
     public static String acquireLock(String userId, String resourcePath, String lockTypeString) {
         LockType lockType = LockType.get(lockTypeString);
