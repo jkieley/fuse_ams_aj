@@ -53,7 +53,9 @@ public class Resource {
     }
 
     public void setMd5FromLastUpdate(String md5FromLastUpdate) {
-        this.md5FromLastUpdate = md5FromLastUpdate;
+        if(!md5FromLastUpdate.isEmpty()){
+            this.md5FromLastUpdate = md5FromLastUpdate;
+        }
     }
 
     public synchronized LeaseResult acquireLease() {
