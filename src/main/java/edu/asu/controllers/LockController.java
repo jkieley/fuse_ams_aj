@@ -53,10 +53,11 @@ public class LockController {
     String lock(
             @RequestParam("userId") String userId,
             @RequestParam("resourcePath") String resourcePath,
+            @RequestParam("blockIndex") Integer blockId,
             @RequestParam("lockType") String lockType
     ) {
         System.out.println(String.format("lock: userId: %s, resourcePath: %s, lockType: %s", userId, resourcePath, lockType));
-        return LockFactory.acquireLock(userId, resourcePath, lockType);
+        return LockFactory.acquireLock(userId, resourcePath, lockType, blockId);
     }
 
     @RequestMapping("/unlock")
@@ -64,33 +65,36 @@ public class LockController {
     String unlock(
             @RequestParam("userId") String userId,
             @RequestParam("resourcePath") String resourcePath,
+            @RequestParam("blockIndex") Integer blockId,
             @RequestParam("md5") String md5FromLastUpdate,
             @RequestParam("lockType") String lockType
 
     ) {
         System.out.println(String.format("unlock: userId: %s, resourcePath: %s,md5: %s, lockType: %s", userId, resourcePath, md5FromLastUpdate, lockType));
-        return LockFactory.releaseLock(userId, resourcePath, lockType, md5FromLastUpdate);
+        return LockFactory.releaseLock(userId, resourcePath, lockType, md5FromLastUpdate, blockId);
     }
 
     @RequestMapping("/lease")
     @ResponseBody
     String lease(
             @RequestParam("userId") String userId,
+            @RequestParam("blockIndex") Integer blockId,
             @RequestParam("resourcePath") String resourcePath
     ) {
         System.out.println(String.format("lease: userId: %s, resourcePath: %s", userId, resourcePath));
-        return LockFactory.acquireLease(userId, resourcePath);
+        return LockFactory.acquireLease(userId, resourcePath, blockId);
     }
 
     @RequestMapping("/unlease")
     @ResponseBody
     String unlease(
             @RequestParam("userId") String userId,
+            @RequestParam("blockIndex") Integer blockId,
             @RequestParam("resourcePath") String resourcePath,
             @RequestParam("leaseKey") String leaseKey,
             @RequestParam("md5") String md5FromLastUpdate
     ) {
         System.out.println(String.format("unlease: userId: %s, resourcePath: %s", userId, resourcePath));
-        return LockFactory.releaseLease(userId, resourcePath, leaseKey, md5FromLastUpdate);
+        return LockFactory.releaseLease(userId, resourcePath, leaseKey, md5FromLastUpdate, blockId);
     }
 }
