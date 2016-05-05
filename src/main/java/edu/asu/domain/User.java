@@ -25,7 +25,7 @@ public class User {
         Resource resource = resources.get(resourcePath);
         if(resource == null){
             resource = new Resource(resourcePath);
-            resources.put(userId,resource);
+            resources.put(resourcePath,resource);
         }
         return resource;
     }
