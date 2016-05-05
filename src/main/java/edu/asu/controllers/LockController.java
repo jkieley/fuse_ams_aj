@@ -56,7 +56,7 @@ public class LockController {
             @RequestParam("blockIndex") Integer blockId,
             @RequestParam("lockType") String lockType
     ) {
-        System.out.println(String.format("lock: userId: %s, resourcePath: %s, lockType: %s", userId, resourcePath, lockType));
+        System.out.println(String.format("lock: userId: %s, resourcePath: %s, lockType: %s, blockId: %s", userId, resourcePath, lockType, blockId));
         return LockFactory.acquireLock(userId, resourcePath, lockType, blockId);
     }
 
@@ -70,7 +70,7 @@ public class LockController {
             @RequestParam("lockType") String lockType
 
     ) {
-        System.out.println(String.format("unlock: userId: %s, resourcePath: %s,md5: %s, lockType: %s", userId, resourcePath, md5FromLastUpdate, lockType));
+        System.out.println(String.format("unlock: userId: %s, resourcePath: %s,md5: %s, lockType: %s, , blockId: %s", userId, resourcePath, md5FromLastUpdate, lockType, blockId));
         return LockFactory.releaseLock(userId, resourcePath, lockType, md5FromLastUpdate, blockId);
     }
 
@@ -81,7 +81,7 @@ public class LockController {
             @RequestParam("blockIndex") Integer blockId,
             @RequestParam("resourcePath") String resourcePath
     ) {
-        System.out.println(String.format("lease: userId: %s, resourcePath: %s", userId, resourcePath));
+        System.out.println(String.format("lease: userId: %s, resourcePath: %s, blockId: %s", userId, resourcePath, blockId));
         return LockFactory.acquireLease(userId, resourcePath, blockId);
     }
 
@@ -94,7 +94,7 @@ public class LockController {
             @RequestParam("leaseKey") String leaseKey,
             @RequestParam("md5") String md5FromLastUpdate
     ) {
-        System.out.println(String.format("unlease: userId: %s, resourcePath: %s", userId, resourcePath));
+        System.out.println(String.format("unlease: userId: %s, resourcePath: %s, blockId: %s", userId, resourcePath, blockId));
         return LockFactory.releaseLease(userId, resourcePath, leaseKey, md5FromLastUpdate, blockId);
     }
 }
