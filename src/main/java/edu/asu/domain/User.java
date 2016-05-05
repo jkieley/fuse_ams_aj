@@ -22,7 +22,7 @@ public class User {
     }
 
     public Resource getResource(String resourcePath) {
-        Resource resource = resources.get(userId);
+        Resource resource = resources.get(resourcePath);
         if(resource == null){
             resource = new Resource(resourcePath);
             resources.put(userId,resource);
